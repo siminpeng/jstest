@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h2>获得元素节点</h2>
+	<input type="text" id="username" name="user" value="xiaoming" class="uer" weight="1234">
+	<input type="text" id="usemail" name="email" value="xiaoming@jeif.com">
+	<input type="text" id="usertel" name="tel" value="1234">
+	<input type="button" value="获取" onclick="f1()">
+	
+	<h3>子节点和兄弟节点 </h3>
+	<ul>
+		<li>上海</li>
+		<li>北京</li>
+		<li>烟台</li>
+		<li>青岛</li>
+	</ul>	
+</body>
+<script type="text/javascript">
+		// 获得元素节点
+		var name=document.getElementById('username');//返回一个节点对象
+		console.log(name);
+
+		var hm=document.getElementsByTagName('h2');
+		console.log(hm);
+
+		var inn=document.getElementsByTagName('input');//返回集合列表对象
+		console.log(inn);
+		console.log(inn[0]);
+		console.log(inn.item(1));
+		console.log('----------------------');
+		//不推荐使用，若不在from中，有的浏览器不支持此方法
+		var  namefind =document.getElementsByName('email');	//返回集合列表对象
+		console.log(namefind);
+		console.log(namefind[0]);
+		console.log(namefind.item(0));
+		/*-----------------------------------------------------------------------*/
+		// 获取文本节点
+		var ht=document.getElementsByTagName('h2')[0];
+		console.log(ht.firstChild.nodeValue);
+		// 获取孩子节点
+		var father =document.getElementsByTagName('ul')[0];
+		console.log(father.childNodes);//找到的节点包括空白节点
+		console.log(father.childNodes.length);//找到节点的个数
+		// 获取上一个或者下一个节点
+		var node=document.getElementsByTagName('li')[1];
+		console.log(node.nextSibling.nextSibling);
+		console.log(node.previousSibling.previousSibling);
+		// 第一个/最后一个子节点
+		var ha=document.getElementsByTagName('h3')[0];
+		console.log(ha.firstChild);
+		console.log(ha.lastChild);
+		/*-----------------------------------------------------------------------*/
+		//获取父亲节点
+		console.log("父亲节点");
+		console.log(ha.parentNode);
+		/*-----------------------------------------------------------------------*/
+		// 属性的操作
+		function f1 () {
+			//获取并且设置属性
+			var user=document.getElementById('username');
+			console.log(user.type);
+			console.log(user.name);
+			console.log(user.value);
+			console.log(user.className);
+			console.log(user.getAttribute('weight'));//自己定义的属性的操作
+
+			user.value="小名";
+			user.setAttribute('weight', "13124");
+			console.log(user.getAttribute('weight'));//自己定义的属性的操作
+		}
+		/*-----------------------------------------------------------------------*/
+		//属性节点获取
+		var nm=document.getElementsByTagName('input')[0];
+		//以“对象”形式返回对应节点内部的全部属性节点信息
+		//各个属性节点就是"对象"的成员属性
+		console.log(nm.attributes);
+		console.log(nm.attributes.value);
+		console.log(nm.attributes.value.nodeType);
+</script>
+</html>
