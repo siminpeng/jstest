@@ -1,0 +1,111 @@
+dom节点：
+1元素节点   2属性节点 3文本节点 注释节点
+1,获取元素节点
+<script type="text/javascript">
+	//① document.getElementById(id属性值) 返回一个元素对象
+	var name=document.getElementById('username');
+
+	//② document.getElementsByTagName(tag标签名称)
+	//   返回一个"集合列表(数组)对象"(不考虑元素对象个数的)
+	var inn=document.getElementsByTagName('input');
+	console.log(inn);
+	console.log(inn[0]);
+	console.log(inn.item(1));
+
+	//③ document.getElementsByName(name属性值)
+	//   返回一个"集合列表(数组)对象"(不考虑元素对象个数的)
+	var  namefind =document.getElementsByName('email');	
+	console.log(email);
+	console.log(email[0]);
+	console.log(email.item(0));
+</script>
+2，获取文本节点
+<script type="text/javascript">
+	var ht=document.getElementsByTagName('h2')[0];
+	console.log(ht.firstChild.nodeValue);
+
+	//① childNodes：父节点获得内部全部子节点信息
+	//   length: 获得集合列表的长度(元素对象个数和)
+	var father =document.getElementsByTagName('ul')[0];
+	console.log(father.childNodes);//找到的节点包括空白节点
+	console.log(father.childNodes.length);//找到节点的个数
+
+	//② nextSibling/previousSibling  下个/上个兄弟节点
+	var node=document.getElementsByTagName('li')[1];
+	console.log(node.nextSibling.nextSibling);
+	console.log(node.previousSibling.previousSibling);
+
+	//③ firstChild/lastChild  第一个/最后一个子节点
+	var ha=document.getElementsByTagName('h3')[0];
+	console.log(ha.firstChild);
+	console.log(ha.lastChild);
+</script>
+
+注：获取父亲节点 node名.parentNode
+
+3  属性的操作
+<script type="text/javascript">
+	//获取并且设置属性
+	var user=document.getElementById('username');
+	console.log(user.type);
+	console.log(user.name);
+	console.log(user.value);
+	console.log(user.className);
+	console.log(user.getAttribute('weight'));//自己定义的属性的操作
+
+	user.value="小名";
+	user.setAttribute('weight', "13124");
+	console.log(user.getAttribute('weight'));//自己定义的属性的操作
+</script>
+
+4 属性节点的获取
+<script type="text/javascript">
+	var nm=document.getElementsByTagName('input')[0];
+	//以“对象”形式返回对应节点内部的全部属性节点信息
+	//各个属性节点就是"对象"的成员属性
+	console.log(nm.attributes);
+	console.log(nm.attributes.value);
+	console.log(nm.attributes.value.nodeType);
+</script>
+5 节点创建和添加
+<script type="text/javascript">
+	var ull=document.createElement('ul');
+	var province=['辽宁','山东','浙江'];
+	var city=['沈阳','济南','杭州'];
+	for (k in province) 
+	{
+		//① 创建li的元素节点
+		var lii = document.createElement('li');
+		//② 创建li内部的文本节点
+		var txt = document.createTextNode(province[k]);
+		//③ 给li节点设置属性
+		lii.setAttribute('city', city[k]);
+		//给li追加文本节点
+		lii.appendChild(txt);
+		//给ull追加li节点
+		ull.appendChild(lii);
+		// console.log(lii.getAttribute('city'));
+	}
+	document.getElementsByTagName('body')[0].appendChild(ull);
+</script>
+6 节点添加 
+<script type="text/javascript">
+	var lii = document.createElement('li');
+ 	var txt = document.createTextNode('广州');
+ 	lii.setAttribute('city', '广东');
+ 	lii.appendChild(txt);
+ 	// 在最后面添加
+ 	document.getElementsByTagName('ul')[0].appendChild(lii);
+ 	//添加在shang节点的前面
+ 	var shang=document.getElementById('shang');
+ 	document.getElementsByTagName('ul')[0].insertBefore(lii, shang);
+ 	
+ 	//替换replaceChild
+ 	var yan=document.getElementById('yan');
+ 	document.getElementsByTagName('ul')[0].replaceChild(lii, yan);
+ 	
+ 	//添加已有的节点
+ 	document.getElementById('south').appendChild(shang);
+</script>
+7 节点的复制:cloneNode(true|false)
+8 节点删除：qing.parentNode.removeChild(qing);
