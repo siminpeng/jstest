@@ -1,0 +1,163 @@
+1 js大小写不敏感，php的大小写敏感（类名和函数名除外）
+2 php的数据类型：（8种）
+int float string boolean array objiect null resourse
+js的数字类型（6种）
+number(int float) string boolean null undefined objiect
+3 浏览器输出的方式：console.log();
+4 判断类型：typeof(Object)
+5 number数值类型
+	进制：8进制：0+数字;16进制：ox14;
+6 比较运算符：
+==：比较大小，不比较类型
+===：比较大小和类型
+js中：&&和||运算的结果是影响较大的操作数
+7   函数封装
+    <script type="text/javascript">
+        //函数封装
+        //① 传统方式封装
+        //   该方式封装的函数允许“先调用、后声明”，该过程称为函数的“预加载”
+        //   预加载：程序代码没有执行之前，函数的声明先进入“内存”
+        //           表明是函数调用在前、声明在后，本质是函数声明在前、调用在后
+        //           预加载条件是：“声明、调用”必须在同一个script标记里边
+        //                          原因是每个script标记独立加载、解释、运行
+        getInfo();//B
+        function getInfo(){  //A
+            console.log('beijing');
+        }
+
+        //javascript里边一切都是对象
+        //函数也是对象(数据类型一种)
+        var name = "tom";
+        //② 变量赋值方式声明函数(该方式函数没有预加载)
+        var getWeather = function(){
+            console.log('晴朗');
+        }
+        getWeather();//晴朗
+    </script>
+8    参数的传递
+    <script type="text/javascript">
+        //arguments关键字 在函数内部可以接收传递进来的实参信息
+        //                可以通过数字下标形式，访问各个实参信息
+        //                其有length属性，可以获得实参个数
+        function getInfo(){
+            //根据传递参数的个数做灵活处理
+            if(num>=1)
+            {
+                console.log('个人信息');
+                console.log('名子'+arguments[0]);
+            }
+            if(num>=2)
+            {
+                console.log('年龄'+arguments[1]);
+            }
+        }
+        //同一个函数调用的时候，由于传递不同个数的实参，最终导致的结果也不一样
+        //其是模仿方法重载(定义了许多名称一致的方法，这些方法的参数个数(或参数类型)不一样，这些方法就构成重载)
+        //在php和js里边没有"重载"
+        getInfo();
+        getInfo('jim');
+        getInfo('tom',23);
+        </script>
+9  递归的时候使用arguments.callee，降低函数之间的耦合度
+    <script type="text/javascript">
+     function jiecheng(n)
+        {
+                if(n==1)
+                    return 1;
+                return n*arguments.callee(n-1);
+        }
+        //通过一个简便的jc就调用阶乘函数
+        var jc = jiecheng;//函数(对象)赋值，是引用传递
+        //销毁jiecheng的名称，后边全部使用jc名称
+        jiecheng = null;//"" null;0
+        console.log(jc(4));
+    </script>
+10  数组声明
+     <script type="text/javascript">
+        //三种方式声明数组
+        //① var arr = [元素，元素，元素]
+        var color = ['pink','gold','orange','yellow'];
+        color[1] = "blue";
+        console.log(color);
+        //通过下标访问数组元素内容：数组[下标]
+        console.log(color[2]); //orange
+
+        //② var arr = new Array(元素，元素，元素);
+        var animal = new Array('dog','pic','cat');
+        console.log(animal);//["dog", "pic", "cat"]
+
+        //③ var arr = new Array();先声明好数组，后期再添加元素
+        var city = new Array();
+        //给数组添加元素：数组[下标] = 值;
+        city[0] = "beijing";
+        city[1] = "shanghai";
+        city['liaoning'] = "shenyang"; //给city对象声明一个"成员属性"
+        city[2] = "chongqing";
+        city['henan'] = "zhengzhou"; //给city对象声明一个"成员属性"
+        console.log(city);//["beijing", "shanghai", "chongqing"]
+
+        //对象访问成员(两种方式)：对象.成员名称   对象[成员名称]
+        console.log(city.liaoning);//shenyang
+        console.log(city[1]);//shanghai
+        console.log(city['henan']);//zhengzhou
+    </script>
+11 遍历数组
+ <script type="text/javascript">
+        //① for循环遍历
+        //   为了遍历效果最佳，数组下标最好是0/1/2/3....规则连续的
+        for(var i=0; i<animal.length; i++){
+            console.log(i+"----"+animal[i]);
+        }
+
+        //② for-in遍历，同时可以遍历"数组"和"对象"，并且下标有跳跃也没有关系
+        //for(var 下标变量 in  数组/对象)
+        for(var k in animal){
+            console.log(k+"---"+animal[k]);
+        }
+
+</script>
+12 对数组的常用操作
+<script type="text/javascript">
+        //遍历数组
+        var animal = new Array('dog','pic','cat','duck');
+
+        //push()/pop()  在数组元素的尾部追加、删除元素
+        animal.push("tiger","wolf","tiger","pic");
+        //animal.pop();
+        //animal.pop();
+        //animal.pop();
+        console.log(animal);
+        //unshift()/shift() 在数组元素的头部追加、删除元素
+        //indexOf()  判断一个元素在数组中“左边”第一次出现的位置
+        console.log(animal.indexOf('pic'));//1
+        console.log(animal.indexOf('hello'));//-1
+        //lastIndexOf() 判断一个元素在数组中“右边”第一次出现的位置
+        console.log(animal.lastIndexOf('pic'));//7
+        //indexOf()或lastIndexOf()可以判断数组是否出现指定的元素
+</script>
+13 字符串
+ <script type="text/javascript">
+        var title = "study php";
+        //字符串可以调用成员属性 或 方法
+        console.log(title.length);//9
+        console.log(title.substr(0,5));//study
+        //字符串为什么可以调用成员(惯例是对象才可以调用成员)
+        //答：表面是字符串调用成员，在浏览器javascript解释引擎内部要做具体处理
+        //    引擎根据字符串生成一个“临时对象”，是临时对象调用的成员并返回结果
+        //    之后该临时对象就被销毁了
+        //字符串就是对象 var name = new String(内容);
+
+        console.log(typeof title);//string
+ </script>
+ 14 eval的使用
+ <script type="text/javascript">
+        var a = 10;
+        var b = 15;
+        //把字符串当做表达式运行起来
+        console.log(eval("a+b"));  //【25】
+
+        //console.log(alert(123)); //看到弹出框、输出undefined
+        //
+        console.log("alert(456)"); //没有弹出框、输出alert(456)
+        console.log(eval("alert(789)")); //看到弹出框、输出undefined
+</script>

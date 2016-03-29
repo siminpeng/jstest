@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js的练习笔记</title>
+	<script type="text/javascript">
+	// 最大数和最小数
+		console.log(Number.MAX_VALUE);
+		console.log(Number.MIN_VALUE);
+	// 运算符
+		var addr="beijing";
+		var age=23;
+		// 在js中，逻辑运算（||和&&）返回的结果是影响较大的那个运算符
+		console.log(addr && age);console.log(addr || age);
+		// 比较运算符的返回结果是布尔值
+		console.log(addr > age);
+		console.log(addr || age);
+		function getInfo ()
+		{
+			var num=arguments.length;
+			if(num>=1)
+			{
+				console.log('个人信息');
+				console.log('名子'+arguments[0]);
+			}
+			if(num>=2)
+			{
+				console.log('年龄'+arguments[1]);
+			}
+			console.log('输出完毕');
+		}
+
+		getInfo();
+        getInfo('jim');
+        getInfo('tom',23);
+
+        function jiecheng (num) {
+        	if(num==1)
+        		return 1;
+        	 // else return num*jiecheng(num-1);
+        	 else return num*arguments.callee(num-1);
+        }
+
+        var n=jiecheng(5);
+        console.log('我被输出：'+n);
+        
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
