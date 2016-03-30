@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h2 style="width: 400px; height: 200px; background-color: pink;">这是css和事件的操作 </h2>
+	<input type="button" value="获取css" onclick="getcss()"></input>
+	<input type="button" value="设置css" onclick="setcss()"></input>
+	<input type="button" value="取消" onclick="cancel()"></input>
+	<div style="width: 400px; height: 100px; background-color: lightblue;">
+		<p style="background-color:yellow">
+			<span style="color:red">事件流</span>
+		</p>
+	</div>
+	
+</body>
+<script type="text/javascript">
+	var hh = document.getElementsByTagName('h2')[0];
+	/*************************************************************/
+	// css样式的操作
+	function getcss () 
+	{
+		 //获取css(只能获得"行内"样式)
+		console.log(hh.style.width);
+		console.log(hh.style.height);
+		console.log(hh.style.backgroundColor);
+	}
+	function setcss () 
+	{
+		//设置(修改)css(只是设置"行内"样式)
+		// 有则修改、无则创建
+		hh.style.width="500px";
+		hh.style.height="200px";
+		hh.style.backgroundColor="red";
+		hh.style.color="yellow";
+	}
+	/*************************************************************/
+	//简单的dom二级事件demo1
+	hh.addEventListener('mouseover',function () {
+		//背景颜色发生变化
+        //hh 或 this 他们代表的对象一致，都是h2标题标签的"元素节点对象"
+        //记住：在事件处理函数里边，this关键字一般都代表事件的“元素节点对象”
+        // console.log(hh);//<h2>
+        // console.log(this);//<h2>
+        this.style.backgroundColor="lightblue";
+        hh.style.color="red";
+	})
+	hh.addEventListener('mouseout', function () {
+		this.style.backgroundColor="pink";
+		this.style.color ="yellow";
+	})
+	/*************************************************************/
+	//简单的dom二级事件demo2
+	function f1 () {
+		console.log('111');
+	}
+	function f2 () {
+		console.log('222');
+	}
+	function f3 () {
+		console.log('333');
+	}
+	//为同一个h2元素对象绑定多个click事件
+    //f1没有()括号，是函数的名字对click进行赋值(而非函数运行返回的信息复制)
+    hh.addEventListener('click', f1);
+    hh.addEventListener('click', f2);
+    hh.addEventListener('click', f3);
+	/*************************************************************/
+	// 取消事件
+    function cancel () 
+    {
+    	//取消事件操作，要求：
+        //① 有名函数处理
+        //② 参数个数与绑定完全一致
+    	hh.removeEventListener('click', f2); 
+    	hh.removeEventListener('click', f3); 
+    }
+	/*************************************************************/
+    // 事件流的操作
+    var sp = document.getElementsByTagName('span')[0];
+	var pt = document.getElementsByTagName('p')[0];
+	var dv = document.getElementsByTagName('div')[0];
+	//sp.onclick = function(){}
+	//addEventListener(类型，处理，事件流true捕捉/false冒泡);
+	//为了阻止比较有意义，只考虑冒泡型即可。
+	sp.addEventListener('click', function (evt) {
+	    console.log('this is span tag');
+	    evt.stopPropagation(); //阻止事件流产生
+	},false);
+	pt.addEventListener('click', function (evt) {
+	    console.log('this is p tag');
+	    evt.stopPropagation();
+	},false);
+	dv.addEventListener('click', function (evt) {
+	    console.log('this is dv tag');
+	    evt.stopPropagation();
+	},false);	
+	/*************************************************************/
+	// 获得事件对象
+	sp.onclick=function (evt) {
+		alert(evt);
+	}
+	/*************************************************************/
+	// 事件对象作用
+	// ① 鼠标事件对象获得坐标信息
+	dv.onclick = function(evt){
+		console.log(evt.clientX+"----------"+evt.clientY);//获得鼠标相对DOM区域坐标
+		console.log(evt.pageX+"----------"+evt.pageY);//获得鼠标相对DOM区域坐标(给考虑滚动条距离)
+		console.log(evt.screenX+"----------"+evt.screenY);//获得鼠标相对屏幕的坐标
+	}
+	//③ 感知被触发键子信息
+	dv.onkeydown = function(evt){
+	    var num = evt.keyCode;
+	    //console.log(evt.keyCode);
+	    if(num==38){
+	        console.log('上');
+	    }
+	    if(num==40){
+	        console.log('下');
+	    }
+	    if(num==37){
+	        console.log('左');
+	    }
+	    if(num==39){
+	        console.log('右');
+	    }
+	}
+	/*************************************************************/	
+	// 事件对象的作用(阻止浏览器默认动作)
+</script>
+</html>
